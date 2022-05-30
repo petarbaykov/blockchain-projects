@@ -1,10 +1,10 @@
 class Block {
-  constructor() {
+  constructor(data = "") {
     this.index = 0;
     this.previousHash = 0;
     this.hash = "";
     this.nonce = 0;
-    this.data = "";
+    this.data = data;
   }
 
   get key() {

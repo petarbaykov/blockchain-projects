@@ -11,44 +11,33 @@ class Blockchain {
     return this.blocks[this.blocks.length - 1];
   }
 
-  // TODO: add block
-  addBlock() {
-    console.log('add block');
-    const block = this.getNextBlock();
-
+  addBlock(data) {
+    const block = this.getNextBlock(data);
 
     this.blocks.push(block);
 
-
-    console.log(block);
     return block;
   }
 
-  getNextBlock() {
+  getNextBlock(data) {
     const prevBlock = this.getPreviousBlock();
+    const block = new Block(data);
 
-    const block = new Block();
-    block.index = prevBlock.index + 1;
-    block.previousHash = prevBlock.hash;
+    if (prevBlock) {
+      block.index = prevBlock.index + 1;
+      block.previousHash = prevBlock.hash;
+    }
+
     block.hash = this.generateBlockHash(block);
 
-
     return block;
   }
 
-  mine(difficulty = 0) {
-
-  }
-
-  // TODO: get block at index
   getBlockAtIndex(index) {
-    console.log(this.blocks[index]);
     return this.blocks[index];
   }
 
-  // TODO: get all blocks
   getAllBlocks() {
-    console.log(this.blocks);
     return this.blocks;
   }
 

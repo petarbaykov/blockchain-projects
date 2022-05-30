@@ -1,10 +1,7 @@
 const Blockchain = require('./blockchain');
-const Block = require('./block');
 
-const genesisBlock = new Block();
 const blockchain = new Blockchain();
 
-blockchain.addBlock(genesisBlock);
-
-
-console.log(blockchain);
+blockchain.addBlock("This is the genesis block");
+blockchain.addBlock("This is the second block");
+blockchain.addBlock("This is the third block");
