@@ -3,7 +3,7 @@ const sha256 = require('js-sha256');
 const Block = require('./block');
 
 class Blockchain {
-  constructor(genesisBlock) {
+  constructor() {
     this.blocks = [];
   }
 
@@ -12,15 +12,8 @@ class Blockchain {
   }
 
   addBlock(data) {
-    const block = this.getNextBlock(data);
-
-    this.blocks.push(block);
-
-    return block;
-  }
-
-  getNextBlock(data) {
     const prevBlock = this.getPreviousBlock();
+
     const block = new Block(data);
 
     if (prevBlock) {
@@ -29,6 +22,8 @@ class Blockchain {
     }
 
     block.hash = this.generateBlockHash(block);
+
+    this.blocks.push(block);
 
     return block;
   }

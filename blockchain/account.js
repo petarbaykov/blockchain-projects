@@ -8,9 +8,12 @@ class Account {
     generateKeyPair() {
       const keypair = ec.genKeyPair();
 
+      const pubKey = keypair.getPublic();
+
       return {
         privateKey: keypair.getPrivate('hex'),
-        publicKey: keypair.getPublic('hex'),
+        publicKey: pubKey,
+        publicKeyCompressed: pubKey.encodeCompressed("hex"),
       };
     }
 
@@ -18,8 +21,8 @@ class Account {
       return ec.sign(sha256(message), privateKey, "hex", { canonical: true });
     }
 
-    verifySignature() {
-
+    verifySignature(message, signature, pubKey) {
+      return ec.verify(sha256(message), signature, pubKey);
     }
 }
 
