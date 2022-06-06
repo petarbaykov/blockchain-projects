@@ -1,17 +1,24 @@
+const fs = require('fs');
+
 const sha256 = require('js-sha256');
 
 const Block = require('./block');
 
 class Blockchain {
   constructor() {
-    this.blocks = [];
+    try {
+      const blocks = JSON.parse(Buffer.from(fs.readFileSync('blockchain.json')).toString('utf8'));
+      this.blocks = blocks;
+    } catch (e) {
+      this.blocks = [];
+    }
   }
 
   getPreviousBlock() {
     return this.blocks[this.blocks.length - 1];
   }
 
-  addBlock(data) {
+  async addBlock(data) {
     const prevBlock = this.getPreviousBlock();
 
     const block = new Block(data);
@@ -38,6 +45,10 @@ class Blockchain {
 
   generateBlockHash(block) {
     return sha256(block.key);
+  }
+
+  persistBlocks() {
+    return fs.writeFileSync('blockchain.json', JSON.stringify(this.blocks), { flag: 'w+' });
   }
 }
 

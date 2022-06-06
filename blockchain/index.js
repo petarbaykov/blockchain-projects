@@ -12,10 +12,11 @@ const account = new Account();
 
 const keypair = account.generateKeyPair();
 
-console.log('keypair', keypair);
-
 const signature = account.signMessage("test", keypair.privateKey);
 
 const validSignature = account.verifySignature("test", signature, keypair.publicKey);
 
-console.log('valid signature', validSignature);
+
+[`exit`, `SIGINT`, `SIGUSR1`, `SIGUSR2`, `uncaughtException`, `SIGTERM`].forEach((eventType) => {
+  process.on(eventType, async () => blockchain.persistBlocks());
+})
