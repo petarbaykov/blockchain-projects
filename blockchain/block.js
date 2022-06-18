@@ -5,6 +5,7 @@ class Block {
     this.hash = "";
     this.nonce = 0;
     this.data = data;
+    this.timestamp = Date.now();
   }
 
   get key() {

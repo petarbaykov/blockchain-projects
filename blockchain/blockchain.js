@@ -14,12 +14,12 @@ class Blockchain {
     }
   }
 
-  getPreviousBlock() {
+  getLatestBlock() {
     return this.blocks[this.blocks.length - 1];
   }
 
   async addBlock(data) {
-    const prevBlock = this.getPreviousBlock();
+    const prevBlock = this.getLatestBlock();
 
     const block = new Block(data);
 
