@@ -23,7 +23,10 @@ contract Stake is Ownable {
     }
 
     function withdraw() public {
-        // TODO: calculate rewards
         // TODO: return staked balance
+    }
+
+    function claim() public {
+        // TODO: calculate and distribute stake rewards
     }
 }
