@@ -9,21 +9,27 @@ contract Stake is Ownable {
     IERC20 private _stakeToken;
     IERC20 private _rewardToken;
 
+    mapping(address => uint256) public staked_balances;
+
+
     constructor(address stakeToken, address rewardToken) {
         _stakeToken = IERC20(stakeToken);
         _rewardToken = IERC20(rewardToken);
     }
 
-    function stake(uint256 _amount) public {
-        // _stakeToken.approve(address(this), _amount);
-        // _stakeToken.transferFrom(msg.sender, address(this), _amount);
-
-        // TODO: track staked balances
-        _stakeToken.transfer(address(this), _amount);
+    function stake(uint256 _amount) public returns(uint256) {
+        require(_amount > 0, "Amount not positive");
+        require(_stakeToken.allowance(msg.sender, address(this) >= _amount), "Token transfer not approved");
+    
+        _stakeToken.transferFrom(msg.sender, address(this), _amount);
+        staked_balances[msg.sender] += _amount;
     }
 
     function withdraw() public {
-        // TODO: return staked balance
+        require(staked_balances[msg.sender] > 0, "Noting to withdraw");
+
+        _stakeToken.transfer(msg.sender, staked_balances[msg.sender]);
+        staked_balances[msg.sender] = 0;
     }
 
     function claim() public {
